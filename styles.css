@@ -1,0 +1,173 @@
+:root {
+    --color-primary: #2f96eba6;
+    --color-primary-light-1: #9ed2fc71;
+    --color-primary-light-2: #61b8ffe0;
+    --color-primary-dark: #2c8dddec;
+
+    --color-meme-1: #f58a2667;
+    --color-meme-2: #D7A9E3FF;
+    --color-meme-3: #a8d5baff;
+
+    --color-grey-light-1: #faf9f9e8;
+    --color-grey-light-2: #dfddddde;
+    --color-grey-light-3: #cfcecec7;
+    --color-grey-light-4: rgba(172, 172, 172, 0.829);
+
+    --color-grey-dark-1: #333333;
+    --color-grey-dark-2: #777777;
+    --color-grey-dark-3: #999999; 
+
+    --grey-line: 2px solid var(--color-grey-light-2);
+    --light-shadow: 0 2rem 2rem rgba(0, 0, 0, .06);
+    --card-transition-time: 0.5s;
+}
+  
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+    
+html {
+    /* Global Parameters */
+    box-sizing: border-box;
+    /* 1rem = 10px, 10px/16px = 62.5% */
+    font-size: 62.5%; 
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--color-grey-dark-2);    
+    background-image: linear-gradient(to right bottom, var(--color-meme-1), var(--color-meme-1));
+    background-size: cover;
+    background-repeat: no-repeat;
+} 
+
+/* /////////////////////////////////////////////////////////////////////////////// */
+/* Card Box */
+/* /////////////////////////////////////////////////////////////////////////////// */
+
+.card-container {
+    /* 70.8rem = 6*(11) + 12*(.4)rem for each card-box width/height + padding */
+    /* So we're gonna make the card-container slightly larger than that */
+    width: 76rem;
+    height: 76rem;
+    border: 1px solid #CCC;
+    /* margin: 40px 0; */
+    perspective: 2800px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* "So far we have been aligning the items, or an individual item inside the area 
+    defined by the flex-container. If you have a wrapped multiple-line flex container 
+    then you might also want to use the align-content property to control the distribution 
+    of space between the rows. In the specification this is described as packing flex lines." */
+    align-content: center;
+    flex-wrap: wrap;
+    background-color: var(--color-grey-light-2);
+  }
+  
+.card-box {
+    width: 11rem;
+    height: 11rem;
+    transition: all 1s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    /* position: relative; */
+
+    margin-top: .4rem;
+    margin-bottom: .4rem;
+    margin-right: .4rem;
+    margin-left: .4rem;
+}
+  
+.card-box.flipped {
+    /* animation-name: rotate;
+    animation-duration: 1s;
+    animation-timing-function: ease-out; */
+    transform: rotateY(180deg);
+}
+
+/* .card-box.unflipped {
+    animation-name: rotate-reverse;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+    transform: rotateY(180deg);
+} */
+  
+.card__face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* Height of Text is same as box */
+    /* Initially, the line height cased the text area
+    to go past the box size, so whenever I clicked a box, a box
+    below the target box would be "clicked", since the area of the 
+    line-height was too high and surpassed the box size */
+    line-height: 11rem;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    backface-visibility: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.card__face--front {
+    background: red;
+    border-radius: 10px;
+}
+  
+.card__face--back {
+    background: blue;
+    border-radius: 10px;
+    transform: rotateY(180deg);
+}
+
+.card-image {
+    padding: .4rem;
+    border-radius: 5px;
+    background: lightblue;
+    height: 10rem;
+    width: 10rem;
+}
+
+/* animation: rotate-inverse var(--card-transition-time) linear both; */
+
+
+@keyframes rotate {
+    0% {
+      transform: rotateY(0);
+    }
+    70% {
+      transform: rotateY(200deg);
+    }
+    100% {
+      transform: rotateY(180deg);
+    }
+}
+  
+@keyframes rotate-inverse {
+    0% {
+        transform: rotateY(180deg);
+    }
+    70% {
+        transform: rotateY(-20deg);
+    }
+    100% {
+        transform: rotateY(0);
+    }
+}
+
