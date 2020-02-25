@@ -2,11 +2,14 @@
     --color-primary: #2f96eba6;
     --color-primary-light-1: #9ed2fc71;
     --color-primary-light-2: #61b8ffe0;
+    --color-primary-light-3: #7ad2f588;
     --color-primary-dark: #2c8dddec;
 
     --color-meme-1: #f58a2667;
     --color-meme-2: rgb(135, 137, 248);
     --color-meme-3: rgb(97, 204, 140);
+    --color-meme-4: #eba05b;
+
 
     --color-grey-light-1: #faf9f9e8;
     --color-grey-light-2: #dfddddde;
@@ -48,19 +51,100 @@ body {
     background-image: linear-gradient(to right bottom, var(--color-meme-1), var(--color-meme-1));
     background-size: cover;
     background-repeat: no-repeat;
+    height: 100vh;
 } 
+
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5rem;
+}
 
 /* /////////////////////////////////////////////////////////////////////////////// */
 /* Game Container Interface */
 /* /////////////////////////////////////////////////////////////////////////////// */
 
+.game-title {
+    /* margin-bottom: 1rem; */
+    font-size: 4rem;
+}
+
+.game-description {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+
 .game-container {
     display: flex;
 }
 
+.user-interface {
+    display: flex;
+    flex-direction: column;
+}
+
+.start-game {
+    width: 25rem;
+    min-width: 25rem;
+    height: 10rem;
+    background-color: var(--color-grey-light-1);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,.2);
+
+    margin-left: 3rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text-input {
+    display: flex;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+  
+.text-block {
+    width: 10rem;
+    text-align: right;
+    font-size: 1.5rem;
+    /* This line allows you to vertically align text */
+    margin: auto;
+    margin-right: 2rem;
+    text-align: center;
+}
+
+.input-block {
+    width: 10rem;
+    background-color: var(--color-primary-light-1);
+    padding: 1rem;
+    color: var(--color-grey-dark-2);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.25rem;
+}
+
 .scoreboard {
     width: 25rem;
-    height: 40rem;
+    min-width: 25rem;
+    height: 28rem;
+    background-color: var(--color-grey-light-1);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,.2);
+
+    margin-left: 3rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.high-score {
+    width: 25rem;
+    min-width: 25rem;
+    height: 36rem;
     background-color: var(--color-grey-light-1);
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(0,0,0,.2);
@@ -71,6 +155,59 @@ body {
     align-items: center;
 }
 
+.high-score-square {
+    width: 23rem;
+    height: 23rem;
+    background-color: var(--color-grey-light-2);
+    border-radius: 7px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.highscore-leader {
+    width: 21rem;
+    height: 6rem;
+    background-color: var(--color-meme-4);
+    border-radius: 5px;
+
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+
+    display: flex;
+    /* flex-direction: column;
+    align-items: center; */
+    align-items: center;
+}
+
+.highscore-count {
+    color: white;
+    margin-left: 1.5rem;
+    font-size: 2rem;
+    height: 3rem;
+    width: 3rem;
+    border: 1.5px solid white;
+    border-radius: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.highscore-initials {
+    color: white;
+    margin-right: 1.5rem;
+    margin-left: 1.5rem;
+    font-size: 2rem;
+}
+
+.highscore-stat {
+    color: white;
+    font-size: 2rem;
+    margin-left: 1rem;
+}
+
 .scoreboard-title {
     font-size: 2rem;
     margin-top: .5rem;
@@ -79,7 +216,7 @@ body {
 
 .scoreboard-square {
     width: 23rem;
-    height: 35rem;
+    height: 23rem;
     background-color: var(--color-grey-light-2);
     border-radius: 7px;
 
@@ -90,7 +227,7 @@ body {
 
 .scoreboard-pairs {
     width: 21rem;
-    height: 16rem;
+    height: 10rem;
     background-color: var(--color-meme-2);
     border-radius: 5px;
 
@@ -104,7 +241,7 @@ body {
 
 .scoreboard-turns {
     width: 21rem;
-    height: 16rem;
+    height: 10rem;
     background-color: var(--color-meme-3);
     border-radius: 5px;
 
@@ -118,7 +255,7 @@ body {
 
 .scoreboard-pairs-score,
 .scoreboard-turns-score {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     margin-bottom: 0rem;
     font-size: 1.5rem;
 
@@ -135,8 +272,9 @@ body {
 
 .pairs-score,
 .turns-score {
-    font-size: 6rem;
+    font-size: 4rem;
     color: white;
+    margin-bottom: 1rem;
 }
 
 /* /////////////////////////////////////////////////////////////////////////////// */
@@ -147,6 +285,7 @@ body {
     /* 70.8rem = 6*(11) + 12*(.4)rem for each card-box width/height + padding */
     /* So we're gonna make the card-container slightly larger than that */
     width: 76rem;
+    min-width: 76rem;
     height: 76rem;
     border: 1px solid #CCC;
     /* margin: 40px 0; */
@@ -163,6 +302,9 @@ body {
     align-content: center;
     flex-wrap: wrap;
     background-color: var(--color-grey-light-2);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,.2);
+
   }
   
 .card-box {
@@ -220,15 +362,15 @@ body {
 }
   
 .card__face--back {
-    background: blue;
+    background: white;
     border-radius: 10px;
     transform: rotateY(180deg);
 }
 
 .card-image {
-    padding: .4rem;
+    padding: 1rem;
     border-radius: 5px;
-    background: lightblue;
+    background: var(--color-primary-light-3);
     height: 10rem;
     width: 10rem;
 }
@@ -259,4 +401,3 @@ body {
         transform: rotateY(0);
     }
 }
-

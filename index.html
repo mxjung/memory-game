@@ -7,31 +7,59 @@
     <title>Max's Memory Game</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
-    <button class="btn-start" id="btn-start">Start Game</button>
     <div class="game">
+        <span class="game-title">Max's Memory Game</span>
+        <span class="game-description">Find all of the card pairs using your memory!</span>
         <div class="game-container">
             <div class="card-container" id='card-container'>
 
             </div>
-            <div class="scoreboard">
-                <span class="scoreboard-title">
-                    Your Game
-                </span>
-                <div class="scoreboard-square">
-                    <div class="scoreboard-pairs">
-                        <span class="scoreboard-pairs-score">Number of Pairs Left</span>
-                        <span class="pairs-score" id='pairs-score'>18</span>
+            <div class="user-interface">
+                <div class="start-game">
+                    <div class="text-input">
+                        <p class="text-block">Enter Your Initials</p>
+                        <input id="textTop" type="text" class="input-block" placeholder="XX" />
                     </div>
-                    <div class="scoreboard-turns">
-                        <span class="scoreboard-turns-score">Number of Turns</span>
-                        <span class="turns-score" id='turns-score'>0</span>
+                    <button class="btn-start" id="btn-start">Start Game</button>
+
+                </div>
+                <div class="scoreboard">
+                    <span class="scoreboard-title">
+                        Your Game
+                    </span>
+                    <div class="scoreboard-square">
+                        <div class="scoreboard-pairs">
+                            <span class="scoreboard-pairs-score">Number of Pairs Left</span>
+                            <span class="pairs-score" id='pairs-score'>18</span>
+                        </div>
+                        <div class="scoreboard-turns">
+                            <span class="scoreboard-turns-score">Number of Turns</span>
+                            <span class="turns-score" id='turns-score'>0</span>
+                        </div>
                     </div>
                 </div>
+                <div class="high-score">
+                    <span class="scoreboard-title">
+                        Highscores
+                    </span>
+                    <div class="high-score-square">
+                        <div class="high-score-table" id="high-score-table">
+                            <div class="highscore-leader" id="score-01">
+                                <span class="highscore-count" id="highscore-count">1</span>
+                                <span class="highscore-initials" id="highscore-initials">MJ</span>
+                                <span class="highscore-stat" id='highscore-stat'>Turns: 18</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
+
         </div>
 
         <script src="script.js"></script>

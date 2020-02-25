@@ -215,7 +215,7 @@ function startBtnHandler() {
 
     // Reset the stats of the game
     pairedTurns.innerHTML = 0;
-    pairScore.innerHTML = containerNum/2;
+    pairScore.innerHTML = containerNum / 2;
 
     // Empty any childNodes that may exist on current board
     deleteGame = document.getElementById('card-container');
@@ -246,7 +246,15 @@ function startBtnHandler() {
 
         // Create image element
         imageCard = document.createElement('img');
-        imageCard.src = 'img/user-4.jpg';
+        imageCard.src = `img/${randomArr[i]}.png`;
+        // <svg class="side-nav_icon">
+        //                         <use xlink:href="img/sprite.svg#icon-info-with-circle"></use>
+        //                     </svg>
+        // imageCard = document.createElementNS('http://www.w3.org/2000/svg', 'svg'),
+        // useElem = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+        // useElem.setAttributeNS('img/company-logos/sprite.svg', 'xlink:href', 'img/company-logos/sprite.svg#adobe');
+        // imageCard.appendChild(useElem);
+
         imageCard.classList.add(`card-image`);
         imageCard.classList.add(`card-image-${randomArr[i]}`);
 
@@ -270,4 +278,73 @@ function randomArray(n) {
         }
     }
     return arr;
+}
+
+
+////////////////////////////////////////////////////////////////////////
+// Local Storage for Keeping High Scores
+////////////////////////////////////////////////////////////////////////
+
+// When game is loaded, call function to update chart
+var existingStats = localStorage.getItem("stats");
+
+function updateChart() {
+    console.log(existingStats);
+    // remove whatever stats was in the chart
+    scoreTable = document.getElementById('high-score-table');
+    scoreTable.innerHTML = '';
+
+    if (existingStats === null) {
+        return;
+    } else {
+        // parse through the information
+        scorePairs = existingStats.split(',');
+
+        // all stats will be separated by names, at index 1, 3, 5, ...
+        tempStats = [];
+        for (var i = 1; i < scorePairs.length; i = i + 2) {
+            tempStats.push(scorePairs[i]);
+        }
+        // sort the scores
+        tempStats = tempStats.sort(function (a, b) {
+            return a - b;
+        });
+    }
+
+    // Create the html elements
+    for (var j=0; j<scorePairs.length/2; j++) {
+        leader = document.createElement('div');
+        leader.classList.add('highscore-leader'); 
+        leader.setAttribute('id',`score-${j+1}`);
+
+        count = document.createElement('span');
+        count.classList.add('highscore-count'); 
+        count.setAttribute('id',`highscore-count`);
+        count.innerHTML = j+1;
+     
+        initials = document.createElement('span');
+        initials.classList.add('highscore-initials'); 
+        initials.setAttribute('id',`highscore-initials`);
+        initials.innerHTML = 'MJ';
+     
+        stat = document.createElement('span');
+        stat.classList.add('highscore-stat'); 
+        stat.setAttribute('id',`highscore-stat`);
+        stat.innerHTML = tempStats[j];
+
+        // append all
+        leader.appendChild(count);
+        leader.appendChild(initials);
+        leader.appendChild(stat);
+        scoreTable.appendChild(leader);
+        console.log(j);
+    }
+    console.log('we came');
+}
+
+// When game first loads, run updateChart
+updateChart();
+
+function addToChart(initials, stats) {
+
 }
