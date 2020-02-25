@@ -5,8 +5,8 @@
     --color-primary-dark: #2c8dddec;
 
     --color-meme-1: #f58a2667;
-    --color-meme-2: #D7A9E3FF;
-    --color-meme-3: #a8d5baff;
+    --color-meme-2: rgb(135, 137, 248);
+    --color-meme-3: rgb(97, 204, 140);
 
     --color-grey-light-1: #faf9f9e8;
     --color-grey-light-2: #dfddddde;
@@ -49,6 +49,95 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
 } 
+
+/* /////////////////////////////////////////////////////////////////////////////// */
+/* Game Container Interface */
+/* /////////////////////////////////////////////////////////////////////////////// */
+
+.game-container {
+    display: flex;
+}
+
+.scoreboard {
+    width: 25rem;
+    height: 40rem;
+    background-color: var(--color-grey-light-1);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,.2);
+
+    margin-left: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.scoreboard-title {
+    font-size: 2rem;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+}
+
+.scoreboard-square {
+    width: 23rem;
+    height: 35rem;
+    background-color: var(--color-grey-light-2);
+    border-radius: 7px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.scoreboard-pairs {
+    width: 21rem;
+    height: 16rem;
+    background-color: var(--color-meme-2);
+    border-radius: 5px;
+
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.scoreboard-turns {
+    width: 21rem;
+    height: 16rem;
+    background-color: var(--color-meme-3);
+    border-radius: 5px;
+
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.scoreboard-pairs-score,
+.scoreboard-turns-score {
+    margin-top: 1.5rem;
+    margin-bottom: 0rem;
+    font-size: 1.5rem;
+
+    color: white;
+    width: 17rem;
+    height: 3rem;
+    border: 1.5px solid white;
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.pairs-score,
+.turns-score {
+    font-size: 6rem;
+    color: white;
+}
 
 /* /////////////////////////////////////////////////////////////////////////////// */
 /* Card Box */

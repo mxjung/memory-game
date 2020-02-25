@@ -22,6 +22,9 @@ var selectedCardArray = [];
 // there are already 2 faced up, don't allow player to see another card
 var cardsFacedUp = 0;
 
+// Game Status: Will be used to control start button (0 - not started, 1 - started)
+var gameStatus = 0;
+
 ////////////////////////////////////////////////////////////////////////
 // Image Box
 ////////////////////////////////////////////////////////////////////////
@@ -30,6 +33,10 @@ var cardsFacedUp = 0;
 
 var cardTransitionTime = 500;
 var switching = false;
+
+var pairScore = document.getElementById('pairs-score');
+var pairedTurns = document.getElementById('turns-score');
+
 
 function cardBoxHandler() {
     // Note: 'this' is the specific cardBox related to the eventhandler
@@ -108,12 +115,15 @@ function cardBoxHandler() {
             // to the score. 
             gamePoints++;
 
+            // Now update the gamePoints
+            pairScore.innerHTML = containerNum / 2 - gamePoints;
+
             // Reset cardsFacedUp, since we are resetting the player picking pairs
             // This time, we don't have to worry about setTimeout since the cards are
             // already flipped, and the player is now allowed to select whatever cards
             // they want (in comparison to below, where a pair is not made)
             cardsFacedUp = 0;
-                
+
             // Remove event-listeners so that cards can't be flipped again
             previousCardBox.removeEventListener("click", cardBoxHandler);
             currentCardBox.removeEventListener("click", cardBoxHandler);
@@ -135,14 +145,32 @@ function cardBoxHandler() {
 
         // Increase the actual paired tries that the user made (this is the actual score)
         numPairedTurns++;
+        // Update the stats on number of paired turns
+        pairedTurns.innerHTML = numPairedTurns;
 
         // Player wins game if all pairs have been matched
         if (containerNum / 2 === gamePoints) {
-            window.alert("you won!");
+            // reset game status
+            gameStatus = 0;
+            // reset game values
+            numPairedTurns = 0;
+            numTurns = 0;
+            numPairedTurns = 0;
+            gamePoints = 0;
+            selectedCard = null;
+            selectedCardArray = [];
+            cardsFacedUp = 0;
+
+            setTimeout(function () {
+                window.alert("you won!");
+            }, 1750);
         }
 
         console.log('tried a pair');
         console.log('numturns: ' + numTurns);
+
+        pairsScore = document.getElementById('pairs-score');
+        console.log(pairsScore.innerHTML);
     }
 
     // if (!(this.classList.contains('flipped'))) {
@@ -176,6 +204,23 @@ var startBtn = document.getElementById('btn-start');
 startBtn.addEventListener('click', startBtnHandler);
 
 function startBtnHandler() {
+    // Let's check if game is ongoing. If there is already a game, 
+    // don't create another game
+    if (gameStatus === 1) {
+        return;
+    }
+
+    // Now that we're started game, change gameStatus
+    gameStatus = 1;
+
+    // Reset the stats of the game
+    pairedTurns.innerHTML = 0;
+    pairScore.innerHTML = containerNum/2;
+
+    // Empty any childNodes that may exist on current board
+    deleteGame = document.getElementById('card-container');
+    deleteGame.innerHTML = '';
+
     randomArr = randomArray(containerNum);
     row = document.getElementById('card-container');
 

@@ -13,9 +13,27 @@
 <body>
     <button class="btn-start" id="btn-start">Start Game</button>
     <div class="game">
-        <div class="card-container" id='card-container'>
+        <div class="game-container">
+            <div class="card-container" id='card-container'>
 
+            </div>
+            <div class="scoreboard">
+                <span class="scoreboard-title">
+                    Your Game
+                </span>
+                <div class="scoreboard-square">
+                    <div class="scoreboard-pairs">
+                        <span class="scoreboard-pairs-score">Number of Pairs Left</span>
+                        <span class="pairs-score" id='pairs-score'>18</span>
+                    </div>
+                    <div class="scoreboard-turns">
+                        <span class="scoreboard-turns-score">Number of Turns</span>
+                        <span class="turns-score" id='turns-score'>0</span>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <script src="script.js"></script>
     </div>
 
