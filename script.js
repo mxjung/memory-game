@@ -166,7 +166,7 @@ function cardBoxHandler() {
 // them in a grid format
 
 // We want to a 6 by 6 grid of flipcards
-var containerNum = 36;
+var containerNum = 4;
 
 var startBtn = document.getElementById('btn-start');
 startBtn.addEventListener('click', startBtnHandler);
@@ -350,9 +350,67 @@ function updateChart() {
     }
 }
 
+function updateChartonload() {
+    preStats = localStorage.getItem("stats");
+    scoreTable = document.getElementById('high-score-table');
+    scoreTable.innerHTML = '';
+
+    if (preStats === null) {
+        return;
+    } else {
+        // parse through the information
+        scorePairs = preStats.split(',');
+
+        // all initials will be separated at index 1, 3, 5, ...
+        // all stats will be separated at index 2, 4, 6, ...
+        onloadStats = [];
+        for (var i = 2; i < scorePairs.length; i = i + 2) {
+            onloadStats.push(scorePairs[i]);
+        }
+
+        onloadInitials = [];
+        for (var m = 1; m < scorePairs.length; m = m + 2) {
+            onloadInitials.push(scorePairs[m]);
+        }
+    }
+
+    // Check how many scorePairs there are. If there is more than 3, just use 3
+    scoreCounts = 3;
+    if (onloadStats.length < 3) {
+        scoreCounts = onloadStats.length;
+    }
+    // Create the html elements
+    for (var j = 0; j < scoreCounts; j++) {
+        leader = document.createElement('div');
+        leader.classList.add('highscore-leader');
+        leader.setAttribute('id', `score-${j + 1}`);
+
+        count = document.createElement('span');
+        count.classList.add('highscore-count');
+        count.setAttribute('id', `highscore-count`);
+        count.innerHTML = j + 1;
+
+        initials = document.createElement('span');
+        initials.classList.add('highscore-initials');
+        initials.setAttribute('id', `highscore-initials`);
+        initials.innerHTML = onloadInitials[j];
+
+        stat = document.createElement('span');
+        stat.classList.add('highscore-stat');
+        stat.setAttribute('id', `highscore-stat`);
+        stat.innerHTML = onloadStats[j];
+
+        // append all
+        leader.appendChild(count);
+        leader.appendChild(initials);
+        leader.appendChild(stat);
+        scoreTable.appendChild(leader);
+    }
+}
+
 function addToChart(name, stats) {
     localStorage.setItem('stats', localStorage.getItem('stats') + `,${name},${stats}`);
 }
 
 // When game first loads, run updateChart
-window.onload = updateChart;
+window.onload = updateChartonload;
