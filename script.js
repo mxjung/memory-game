@@ -294,22 +294,27 @@ function updateChart() {
             scoresArr.push(scorePairs[scorePairs.length-1]);
             console.log('first score');
         } else {
+            console.log('sorting arrays');
             // Else, we need to compare the scores with existing scores
             roundInitials = scorePairs[scorePairs.length - 2];
             roundScore = scorePairs[scorePairs.length - 1];
 
             for (var i = scoresArr.length - 1; i > -1; i--) {
-                if (roundScore > scoresArr[i]) {
+                if (roundScore >= scoresArr[i]) {
                     scoresArr.splice(i+1, 0, roundScore);
                     initialsArr.splice(i+1, 0, roundInitials);
+                    break;
                 }
             }
 
             // If this roundScore is the new lowest score
             if (scoresArr[0]>roundScore){
+                console.log('new low score');
                 scoresArr.splice(0, 0, roundScore);
                 initialsArr.splice(0, 0, roundInitials);                  
             }
+            console.log('scoresArr, ',scoresArr);
+            console.log('initalsArr, ',initialsArr);
         }
     }
 
@@ -348,6 +353,15 @@ function updateChart() {
         leader.appendChild(stat);
         scoreTable.appendChild(leader);
     }
+
+    // Update localStorage with sorted scores
+    tempArr = "null";
+    for (var i=0; i<initialsArr.length; i++) {
+        tempArr = tempArr + `,${initialsArr[i]}` + `,${scoresArr[i]}`;
+    }
+    console.log(tempArr);
+    localStorage.setItem('stats',tempArr);
+    console.log('localStorage updated');
 }
 
 function updateChartonload() {
@@ -372,6 +386,10 @@ function updateChartonload() {
         for (var m = 1; m < scorePairs.length; m = m + 2) {
             onloadInitials.push(scorePairs[m]);
         }
+
+        // Used in subsequent uploadChart() function
+        scoresArr = onloadStats;
+        initialsArr = onloadInitials;
     }
 
     // Check how many scorePairs there are. If there is more than 3, just use 3
