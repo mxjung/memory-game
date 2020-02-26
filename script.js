@@ -166,7 +166,7 @@ function cardBoxHandler() {
 // them in a grid format
 
 // We want to a 6 by 6 grid of flipcards
-var containerNum = 4;
+var containerNum = 36;
 
 var startBtn = document.getElementById('btn-start');
 startBtn.addEventListener('click', startBtnHandler);
