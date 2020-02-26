@@ -206,8 +206,8 @@ function startBtnHandler() {
         frontCard = document.createElement('div');
         frontCard.classList.add('card__face');
         frontCard.classList.add('card__face--front');
-        frontCard.innerHTML = randomArr[i];
-        // frontCard.innerHTML = '?';
+        // frontCard.innerHTML = randomArr[i];
+        frontCard.innerHTML = '?';
         backCard = document.createElement('div');
         backCard.classList.add('card__face');
         backCard.classList.add('card__face--back');
