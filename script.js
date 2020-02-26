@@ -274,7 +274,7 @@ function updateChart() {
     } else {
         // parse through the information
         scorePairs = existingStats.split(',');
-        // console.log('scorePairs: ', scorePairs);
+        console.log('scorePairs: ', scorePairs);
 
         // all initials will be separated at index 1, 3, 5, ...
         // all stats will be separated at index 2, 4, 6, ...
@@ -292,7 +292,7 @@ function updateChart() {
         if (tempStats.length === 0) {
             initialsArr.push(scorePairs[scorePairs.length-2]);
             scoresArr.push(scorePairs[scorePairs.length-1]);
-            // console.log('first scaore');
+            console.log('first score');
         } else {
             // Else, we need to compare the scores with existing scores
             roundInitials = scorePairs[scorePairs.length - 2];
@@ -319,8 +319,8 @@ function updateChart() {
         scoreCounts = scoresArr.length;
     }
 
-    // console.log('initialsArr, ', initialsArr);
-    // console.log('statsArr, ', scoresArr);
+    console.log('initialsArr, ', initialsArr);
+    console.log('statsArr, ', scoresArr);
     // Create the html elements
     for (var j = 0; j < scoreCounts; j++) {
         leader = document.createElement('div');
@@ -355,4 +355,4 @@ function addToChart(name, stats) {
 }
 
 // When game first loads, run updateChart
-updateChart();
+window.onload = updateChart;
