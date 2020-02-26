@@ -43,21 +43,10 @@ function cardBoxHandler() {
     // that it was assigned to - when the specific eventhandler was 
     // created for the specific cardBox. 
 
-    // // If there are already 2 cards that are faced up, return. Don't allow
-    // // player to turn over any card
-    // cardsFacedUp++;
-    // if (cardsFacedUp > 2) {
-    //     return;
-    // }
-
     // In order to use "this" inside the setTimeout function, you need to 
     // save "this" into another variable. "this" used directly inside setTimeout
     // will reference something other than the cardBox element we are referencing to
     var currentCardBox = this;
-
-    // setTimeout(function (){
-    //     specificCardBox.classList.toggle('flipped');
-    // }, 1000);
 
     // Increase turns taken by player
     numTurns++;
@@ -65,11 +54,7 @@ function cardBoxHandler() {
     // Add in the card number that was selected by player
     selectedCardArray.push(this.id.replace('cardBox-', ''));
 
-    // If there are already 2 cards that are faced up, return. Don't allow
-    // player to turn over any card
     cardsFacedUp++;
-    // if (cardsFacedUp > 1) {
-    //     return;
 
     // If numTurns is odd, that means we want to wait for the next card
     // pair to be selected by player. Therefore, keep that card faced up
@@ -77,13 +62,10 @@ function cardBoxHandler() {
     // both cards to see if they are the same cards (the ids for the paired boxes 
     // will be 1 & 2, 3 & 4... 35 & 36)
     if (!(numTurns % 2 === 0)) {
-        console.log(cardsFacedUp);
         if (cardsFacedUp > 2) {
             numTurns = numTurns - 1;
             cardsFacedUp = cardsFacedUp - 1;
             console.log('too many at once');
-            console.log('numturns: ' + numTurns);
-            console.log('cardsFacedUp: ' + cardsFacedUp);
             return;
         }
 
@@ -150,6 +132,10 @@ function cardBoxHandler() {
 
         // Player wins game if all pairs have been matched
         if (containerNum / 2 === gamePoints) {
+            // Before numPairedTurns is reset, save score to localStorage
+            console.log('initials: ', name_initials);
+            addToChart(name_initials, numPairedTurns);
+
             // reset game status
             gameStatus = 0;
             // reset game values
@@ -163,31 +149,13 @@ function cardBoxHandler() {
 
             setTimeout(function () {
                 window.alert("you won!");
+                // When game ends, users score should be saved into localstorage
+                // and high score chart will automatically be updated
+                updateChart();
             }, 1750);
         }
-
-        console.log('tried a pair');
-        console.log('numturns: ' + numTurns);
-
         pairsScore = document.getElementById('pairs-score');
-        console.log(pairsScore.innerHTML);
     }
-
-    // if (!(this.classList.contains('flipped'))) {
-    //     this.classList.toggle('flipped');
-    // } else {
-    //     this.classList.toggle('flipped');
-    // }
-    // cardsFacedUp++;
-
-
-    // console.log(cardBox.classList.includes("flipped"));
-    // event.stopPropagation();
-
-    // window.setTimeout(function () {
-    //     cardCanvas.children[0].children[0].classList.toggle('front');
-    //     switching = false;
-    // }, cardTransitionTime / 2);
 }
 
 
@@ -198,7 +166,7 @@ function cardBoxHandler() {
 // them in a grid format
 
 // We want to a 6 by 6 grid of flipcards
-var containerNum = 36;
+var containerNum = 4;
 
 var startBtn = document.getElementById('btn-start');
 startBtn.addEventListener('click', startBtnHandler);
@@ -247,13 +215,6 @@ function startBtnHandler() {
         // Create image element
         imageCard = document.createElement('img');
         imageCard.src = `img/${randomArr[i]}.png`;
-        // <svg class="side-nav_icon">
-        //                         <use xlink:href="img/sprite.svg#icon-info-with-circle"></use>
-        //                     </svg>
-        // imageCard = document.createElementNS('http://www.w3.org/2000/svg', 'svg'),
-        // useElem = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-        // useElem.setAttributeNS('img/company-logos/sprite.svg', 'xlink:href', 'img/company-logos/sprite.svg#adobe');
-        // imageCard.appendChild(useElem);
 
         imageCard.classList.add(`card-image`);
         imageCard.classList.add(`card-image-${randomArr[i]}`);
@@ -280,6 +241,16 @@ function randomArray(n) {
     return arr;
 }
 
+////////////////////////////////////////////////////////////////////////
+// Text Input for User Initials
+////////////////////////////////////////////////////////////////////////
+
+var name_initials = 'MJ';
+document.getElementById('input-block').oninput = function (ev) {
+    name_initials = this.value;
+    console.log(name_initials);
+};
+
 
 ////////////////////////////////////////////////////////////////////////
 // Local Storage for Keeping High Scores
@@ -288,63 +259,100 @@ function randomArray(n) {
 // When game is loaded, call function to update chart
 var existingStats = localStorage.getItem("stats");
 
+var initialsArr = [];
+var scoresArr = [];
+
 function updateChart() {
-    console.log(existingStats);
+    existingStats = localStorage.getItem("stats");
     // remove whatever stats was in the chart
     scoreTable = document.getElementById('high-score-table');
     scoreTable.innerHTML = '';
 
     if (existingStats === null) {
+        console.log('returned without inputting');
         return;
     } else {
         // parse through the information
         scorePairs = existingStats.split(',');
+        console.log('scorePairs: ', scorePairs);
 
-        // all stats will be separated by names, at index 1, 3, 5, ...
+        // all initials will be separated at index 1, 3, 5, ...
+        // all stats will be separated at index 2, 4, 6, ...
         tempStats = [];
-        for (var i = 1; i < scorePairs.length; i = i + 2) {
+        for (var i = 2; i < scorePairs.length - 1; i = i + 2) {
             tempStats.push(scorePairs[i]);
         }
-        // sort the scores
-        tempStats = tempStats.sort(function (a, b) {
-            return a - b;
-        });
+
+        tempInitials = [];
+        for (var m = 1; m < scorePairs.length - 1; m = m + 2) {
+            tempInitials.push(scorePairs[m]);
+        }
+
+        // When first user uploads score, it should just be pushed
+        if (tempStats.length === 0) {
+            initialsArr.push(scorePairs[scorePairs.length-2]);
+            scoresArr.push(scorePairs[scorePairs.length-1]);
+            console.log('first scaore');
+        } else {
+            // Else, we need to compare the scores with existing scores
+            roundInitials = scorePairs[scorePairs.length - 2];
+            roundScore = scorePairs[scorePairs.length - 1];
+
+            for (var i = scoresArr.length - 1; i > -1; i--) {
+                if (roundScore > scoresArr[i]) {
+                    scoresArr.splice(i+1, 0, roundScore);
+                    initialsArr.splice(i+1, 0, roundInitials);
+                }
+            }
+
+            // If this roundScore is the new lowest score
+            if (scoresArr[0]>roundScore){
+                scoresArr.splice(0, 0, roundScore);
+                initialsArr.splice(0, 0, roundInitials);                  
+            }
+        }
     }
 
+    // Check how many scorePairs there are. If there is more than 3, just use 3
+    scoreCounts = 3;
+    if (scoresArr.length < 3) {
+        scoreCounts = scoresArr.length;
+    }
+
+    console.log('initialsArr, ', initialsArr);
+    console.log('statsArr, ', scoresArr);
     // Create the html elements
-    for (var j=0; j<scorePairs.length/2; j++) {
+    for (var j = 0; j < scoreCounts; j++) {
         leader = document.createElement('div');
-        leader.classList.add('highscore-leader'); 
-        leader.setAttribute('id',`score-${j+1}`);
+        leader.classList.add('highscore-leader');
+        leader.setAttribute('id', `score-${j + 1}`);
 
         count = document.createElement('span');
-        count.classList.add('highscore-count'); 
-        count.setAttribute('id',`highscore-count`);
-        count.innerHTML = j+1;
-     
+        count.classList.add('highscore-count');
+        count.setAttribute('id', `highscore-count`);
+        count.innerHTML = j + 1;
+
         initials = document.createElement('span');
-        initials.classList.add('highscore-initials'); 
-        initials.setAttribute('id',`highscore-initials`);
-        initials.innerHTML = 'MJ';
-     
+        initials.classList.add('highscore-initials');
+        initials.setAttribute('id', `highscore-initials`);
+        initials.innerHTML = initialsArr[j];
+
         stat = document.createElement('span');
-        stat.classList.add('highscore-stat'); 
-        stat.setAttribute('id',`highscore-stat`);
-        stat.innerHTML = tempStats[j];
+        stat.classList.add('highscore-stat');
+        stat.setAttribute('id', `highscore-stat`);
+        stat.innerHTML = scoresArr[j];
 
         // append all
         leader.appendChild(count);
         leader.appendChild(initials);
         leader.appendChild(stat);
         scoreTable.appendChild(leader);
-        console.log(j);
     }
-    console.log('we came');
+}
+
+function addToChart(name, stats) {
+    localStorage.setItem('stats', localStorage.getItem('stats') + `,${name},${stats}`);
 }
 
 // When game first loads, run updateChart
 updateChart();
-
-function addToChart(initials, stats) {
-
-}
