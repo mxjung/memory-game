@@ -166,7 +166,7 @@ function cardBoxHandler() {
 // them in a grid format
 
 // We want to a 6 by 6 grid of flipcards
-var containerNum = 4;
+var containerNum = 36;
 
 var startBtn = document.getElementById('btn-start');
 startBtn.addEventListener('click', startBtnHandler);
@@ -202,12 +202,12 @@ function startBtnHandler() {
         // Add event listener to cardBox (on click)
         cardBox.addEventListener("click", cardBoxHandler);
 
-
         // Create front and backside of cards
         frontCard = document.createElement('div');
         frontCard.classList.add('card__face');
         frontCard.classList.add('card__face--front');
-        frontCard.innerHTML = randomArr[i];
+        // frontCard.innerHTML = randomArr[i];
+        frontCard.innerHTML = '?';
         backCard = document.createElement('div');
         backCard.classList.add('card__face');
         backCard.classList.add('card__face--back');

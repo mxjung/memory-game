@@ -359,6 +359,7 @@ body {
 .card__face--front {
     background: red;
     border-radius: 10px;
+    font-size: 6rem;
 }
   
 .card__face--back {
